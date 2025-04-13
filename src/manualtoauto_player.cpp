@@ -19,18 +19,18 @@ class ManualToAutoPlayer : public rclcpp::Node
 {
 public:
     ManualToAutoPlayer(const rclcpp::NodeOptions & options)
-    : Node("csv_to_cmdvel", options)
+    : Node("ManualToAutoPlayer", options)
     {
-        // 声明参数
+        
         this->declare_parameter<std::string>("csv_file", "/home/hy/wust_nav/odometry_data.csv");
         this->declare_parameter<bool>("loop", false);
         this->declare_parameter<double>("compensation_ratio", 1.2);
-        // 获取参数
+      
         std::string csv_file = this->get_parameter("csv_file").as_string();
         loop_ = this->get_parameter("loop").as_bool();
         compensation_ratio = this->get_parameter("compensation_ratio").as_double();
 
-        // 获取时钟
+      
         clock_ = this->get_clock();
         rcl_clock_type_t clock_type = clock_->get_clock_type();
         use_system_time_ = (clock_type == RCL_SYSTEM_TIME);
@@ -41,19 +41,19 @@ public:
             RCLCPP_INFO(this->get_logger(), "Using ROS (sim) time.");
         }
 
-        // 设置初始时间
+  
         start_time_ = clock_->now();
 
-        // 初始化发布器
+   
         publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
 
-        // 加载CSV文件
+
         if (!load_csv_data(csv_file)) {
             RCLCPP_ERROR(this->get_logger(), "Failed to load CSV file: %s", csv_file.c_str());
             return;
         }
 
-        // 启动第一次发布
+
         start_publishing_next();
     }
 
@@ -65,7 +65,6 @@ private:
             return false;
         }
 
-        // 跳过标题
         std::string header;
         std::getline(file, header);
 
