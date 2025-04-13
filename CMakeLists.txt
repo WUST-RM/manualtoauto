@@ -37,10 +37,7 @@ rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN ManualToAutoPlayer
   EXECUTABLE ${PROJECT_NAME}_player
 )
-# rclcpp_components_register_node(${PROJECT_NAME}
-#   PLUGIN terrain_analysis::TerrainAnalysisNode
-#   EXECUTABLE ${PROJECT_NAME}_node
-# )
+
 
 #############
 ## Testing ##
@@ -63,4 +60,5 @@ endif()
 ament_auto_package(
   INSTALL_TO_SHARE
   launch
+  config
 )
