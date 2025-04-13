@@ -1,0 +1,10 @@
+manualtoauto_listener:
+  ros__parameters:
+    csv_file_name: "odometry_data.csv"
+    odometry_topic: "odometry"
+
+manualtoauto_player:
+  ros__parameters:
+    csv_file : "/home/hy/wust_nav/odometry_data.csv"
+    loop : false
+    compensation_ratio : 1.2
